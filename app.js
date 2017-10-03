@@ -13,6 +13,8 @@ var scores, roundScore, activePlayer, gamePlaying;
 
 init();
 
+var lastRoll;
+
 document.querySelector('.btn-roll').addEventListener('click', function() {
     if (gamePlaying) {
         // 1. random number
@@ -25,7 +27,11 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 
 
         // 3. update round score IF rolled number was NOT a 1
-        if (dice !== 1) {
+        if (dice === 6 && lastRoll === 6) {
+            // Loses score
+            document.querySelector('#score-' + activePlayer).textContent = 0;
+            nextPlayer();
+        } else if (dice !== 1) {
             // Add score
             roundScore += dice; // roundScore = roundScore + dice
             document.querySelector('#current-' + activePlayer).textContent = roundScore;
@@ -33,6 +39,8 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
             // Next player
             nextPlayer();
         }
+
+        lastRoll = dice;
     }
 });
 
