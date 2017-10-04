@@ -30,7 +30,12 @@ document.querySelector('.btn-roll').addEventListener('click', function() {
 
 
         // 3. update round score IF rolled number was NOT a 1
-        if (dice1 !== 1 && dice2 !== 1) {
+        if (dice1 === 1 && dice2 === 1) {
+            scores[activePlayer] = 0;
+            document.querySelector('#score-' + activePlayer).textContent = '0';
+            alert('You rolled two 1\'s!!! Your total score will be set to 0');
+            nextPlayer();
+        } else if (dice1 !== 1 && dice2 !== 1) {
             // Add score
             roundScore += dice1 + dice2; // roundScore = roundScore + dice
             document.querySelector('#current-' + activePlayer).textContent = roundScore;
@@ -62,7 +67,8 @@ document.querySelector('.btn-hold').addEventListener('click', function() {
         // Check if player won the game
         if (scores[activePlayer] >= winningScore) {
             document.querySelector('#name-' + activePlayer).textContent = 'WINNER!';
-            document.querySelector('.dice').style.display = 'none';
+            document.getElementById('dice-1').style.display = 'none';
+            document.getElementById('dice-2').style.display = 'none';
             document.querySelector('.player-' + activePlayer + '-panel').classList.add('winner');
             document.querySelector('.player-' + activePlayer + '-panel').classList.remove('active');
             gamePlaying = false;
@@ -115,6 +121,31 @@ function init() {
     document.querySelector('.player-0-panel').classList.add('active');
 }
 
+// Get the modal
+var modal = document.getElementById('myModal');
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+btn.onclick = function() {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
 
 
 //document.querySelector('#current-' + activePlayer).textContent = dice;
